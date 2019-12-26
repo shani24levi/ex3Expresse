@@ -46,10 +46,7 @@ module.exports ={
             const {experience=null,experienceTime=null,typeJob=null,employeeId=null,degree=null} =req.body; 
             const result = await Candidate.updateOne(
                 {id: req.params.id }, 
-                {$set: {experience: req.body.experience} },
-                {$set: {experienceTime: req.body.experienceTime} },
-                {$set: {typeJob: req.body.typeJob} },
-                {$set: {degree: req.body.degree} }
+                {$set: {experience: req.body.experience ,experienceTime: req.body.experienceTime,typeJob: req.body.typeJob,degree: req.body.degree} }
             );
             res.status(200).json(result);
             res.send(result);
@@ -74,7 +71,8 @@ module.exports ={
         var newId= req.body.id;
         item.save()
         .then(data=> {
-            if (!Candidate.find({newId})){
+            if (Candidate.find({newId}))
+            {
                 res.status(200).json(data);
                 res.send('candidat Added!');
             }
